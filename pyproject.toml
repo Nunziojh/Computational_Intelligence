@@ -7,7 +7,7 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.12"
-ipykernel = "^6.26.0"
+ipykernel = "^6.27.1"
 
 
 [build-system]
