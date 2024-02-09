@@ -82,12 +82,6 @@ class Game(object):
         ):
             # return the relative id
             return self._board[0, -1]
-        for i in range(self._board.shape[0]):
-            for j in range(self._board.shape[1]):
-                if self._board[i, j] == -1:
-                    # if there is at least one empty cell
-                    return -2
-        # if the game is over and it is a draw
         return -1
 
     def play(self, player1: Player, player2: Player) -> int:
@@ -215,3 +209,29 @@ class Game(object):
                 # move the piece down
                 self._board[(self._board.shape[0] - 1, from_pos[1])] = piece
         return acceptable
+    
+    def get_possible_cubes(self) -> list[tuple[int, int]]:
+        '''Returns the possible cubes'''
+        cubes = []
+        mark_player = self.current_player_idx
+        for i in self._board[0,:]:
+            if i == -1 or i == mark_player:
+                cubes.append((0, i))
+        for i in self._board[4,:]:
+            if i == -1 or i == mark_player:
+                cubes.append((4, i))
+        for i in self._board[:,0]:
+            if i == -1 or i == mark_player:
+                cubes.append((i, 0))
+        for i in self._board[:,4]:
+            if i == -1 or i == mark_player:
+                cubes.append((i, 4))
+        return cubes
+    
+    def get_possible_slides(self, from_pos: tuple[int, int]) -> list[Move]:
+        '''Returns the possible slides'''
+        slides = []
+        for i in Move:
+            if self.__slide(from_pos, i):
+                slides.append(i)
+        return slides
