@@ -2,6 +2,7 @@ from abc import ABC, abstractmethod
 from copy import deepcopy
 from enum import Enum
 import numpy as np
+from random import shuffle
 
 # Rules on PDF
 
@@ -10,10 +11,11 @@ class Move(Enum):
     '''
     Selects where you want to place the taken piece. The rest of the pieces are shifted
     '''
+    # modify the order 
     TOP = 0
-    BOTTOM = 1
-    LEFT = 2
-    RIGHT = 3
+    RIGHT = 1
+    BOTTOM = 2
+    LEFT = 3
 
 
 class Player(ABC):
@@ -210,22 +212,22 @@ class Game(object):
                 self._board[(self._board.shape[0] - 1, from_pos[1])] = piece
         return acceptable
     
-    def get_possible_cubes(self) -> list[tuple[int, int]]:
+    # added methods
+
+    def get_possible_cubes(self, player) -> list[tuple[int, int]]:
         '''Returns the possible cubes'''
         cubes = []
-        mark_player = self.current_player_idx
-        for i in self._board[0,:]:
-            if i == -1 or i == mark_player:
+        board = self._board
+        for i in range(5):
+            if board[0, i] == -1 or board[0, i] == player:
                 cubes.append((0, i))
-        for i in self._board[4,:]:
-            if i == -1 or i == mark_player:
+            if board[4, i] == -1 or board[4, i] == player:
                 cubes.append((4, i))
-        for i in self._board[:,0]:
-            if i == -1 or i == mark_player:
+            if board[i, 0] == -1 or board[i, 0] == player:
                 cubes.append((i, 0))
-        for i in self._board[:,4]:
-            if i == -1 or i == mark_player:
+            if board[i, 4] == -1 or board[i, 4] == player:
                 cubes.append((i, 4))
+        shuffle(cubes) # to add randomness and avoid deterministic behavior
         return cubes
     
     def get_possible_slides(self, from_pos: tuple[int, int]) -> list[Move]:
@@ -235,3 +237,7 @@ class Game(object):
             if self.__slide(from_pos, i):
                 slides.append(i)
         return slides
+
+    def is_acceptable_slide (self, from_pos: tuple[int,int], slide: Move) -> bool:
+        '''Check if the slide is acceptable'''
+        return self.__slide(from_pos, slide)
