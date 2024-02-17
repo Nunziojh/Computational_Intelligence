@@ -289,23 +289,26 @@ class MyGame(object):
             self.current_player_idx %= len(players)
             ok = False
             while not ok:
-                from_pos, slide = players[self.current_player_idx].make_move(
-                    self)
+                from_pos, slide = players[self.current_player_idx].make_move(self)
                 ok = self.__move(from_pos, slide, self.current_player_idx)
             winner = self.check_winner()
         return winner
 
-    def __move(self, from_pos: tuple[int, int], slide: MyMove, player_id: int) -> bool:
+    def __move(self, from_pos: tuple[int, int], slide: Move, player_id: int) -> bool:
         '''Perform a move'''
         if player_id > 2:
             return False
         # Oh God, Numpy arrays
-        prev_value = deepcopy(self._board[(from_pos[1], from_pos[0])])
-        acceptable = self.__take((from_pos[1], from_pos[0]), player_id)
+        #prev_value = deepcopy(self._board[(from_pos[1], from_pos[0])])
+        prev_value = deepcopy(self._board[(from_pos[0], from_pos[1])])
+        #acceptable = self.__take((from_pos[1], from_pos[0]), player_id)
+        acceptable = self.__take((from_pos[0], from_pos[1]), player_id)
         if acceptable:
-            acceptable = self.__slide((from_pos[1], from_pos[0]), slide)
+            #acceptable = self.__slide((from_pos[1], from_pos[0]), slide)
+            acceptable = self.__slide((from_pos[0], from_pos[1]), slide)
             if not acceptable:
-                self._board[(from_pos[1], from_pos[0])] = deepcopy(prev_value)
+                #self._board[(from_pos[1], from_pos[0])] = deepcopy(prev_value)
+                self._board[(from_pos[0], from_pos[1])] = deepcopy(prev_value)
         return acceptable
 
     def __take(self, from_pos: tuple[int, int], player_id: int) -> bool:
@@ -412,19 +415,32 @@ class MyGame(object):
         '''Returns the possible cubes'''
         cubes = []
         board = self._board
-        for i in range(5):
+        for i in range(1,4):
             if board[0, i] == -1 or board[0, i] == player:
                 cubes.append((0, i))
+                #cubes.append((i, 0))
             if board[4, i] == -1 or board[4, i] == player:
                 cubes.append((4, i))
+                #cubes.append((i,4))
             if board[i, 0] == -1 or board[i, 0] == player:
                 cubes.append((i, 0))
+                #cubes.append((0,i))
             if board[i, 4] == -1 or board[i, 4] == player:
                 cubes.append((i, 4))
-        shuffle(cubes) # to add randomness and avoid deterministic behavior
+                #cubes.append((4,i))
+        if board[0, 0] == -1 or board[0, 0] == player:
+            cubes.append((0, 0))
+        if board[0, 4] == -1 or board[0, 4] == player:
+            cubes.append((0, 4))
+        if board[4, 0] == -1 or board[4, 0] == player:
+            cubes.append((4, 0))
+        if board[4, 4] == -1 or board[4, 4] == player:
+            cubes.append((4, 4))
+        shuffle(cubes) # to add some randomness
         return cubes
 
     def is_acceptable_slide (self, from_pos: tuple[int,int], slide: MyMove) -> bool:
+        #from_pos = (from_pos[1], from_pos[0])
         '''Check if the slide is acceptable'''
         # define the corners
         SIDES = [(0, 0), (0, 4), (4, 0), (4, 4)]
@@ -464,7 +480,3 @@ class MyGame(object):
         acceptable: bool = acceptable_top or acceptable_bottom or acceptable_left or acceptable_right
         
         return acceptable
-    
-    def is_first_move(self) -> bool:
-        '''Check if it is the first move'''
-        return np.all(self._board == -1)
