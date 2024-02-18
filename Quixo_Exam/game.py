@@ -296,6 +296,8 @@ class MyGame(object):
 
     def __move(self, from_pos: tuple[int, int], slide: Move, player_id: int) -> bool:
         '''Perform a move'''
+        # I changed the order of the position coordinates 
+
         if player_id > 2:
             return False
         # Oh God, Numpy arrays
@@ -418,16 +420,13 @@ class MyGame(object):
         for i in range(1,4):
             if board[0, i] == -1 or board[0, i] == player:
                 cubes.append((0, i))
-                #cubes.append((i, 0))
             if board[4, i] == -1 or board[4, i] == player:
                 cubes.append((4, i))
-                #cubes.append((i,4))
             if board[i, 0] == -1 or board[i, 0] == player:
                 cubes.append((i, 0))
-                #cubes.append((0,i))
             if board[i, 4] == -1 or board[i, 4] == player:
                 cubes.append((i, 4))
-                #cubes.append((4,i))
+
         if board[0, 0] == -1 or board[0, 0] == player:
             cubes.append((0, 0))
         if board[0, 4] == -1 or board[0, 4] == player:
@@ -440,7 +439,6 @@ class MyGame(object):
         return cubes
 
     def is_acceptable_slide (self, from_pos: tuple[int,int], slide: MyMove) -> bool:
-        #from_pos = (from_pos[1], from_pos[0])
         '''Check if the slide is acceptable'''
         # define the corners
         SIDES = [(0, 0), (0, 4), (4, 0), (4, 4)]

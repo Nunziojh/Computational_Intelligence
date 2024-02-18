@@ -188,8 +188,8 @@ if __name__ == '__main__':
         print()
         g.print()
 
-        player1 = My_MinMax_Player(2, 0)
-        player2 = RandomPlayer()
+        player1 = RandomPlayer()
+        player2 = My_MinMax_Player(2, 1)
         
         winner = g.play(player1, player2)
         if winner == 0:
