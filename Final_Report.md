@@ -1,10 +1,15 @@
-# Final Report - Nunzio Messineo s315067
+# Final Report
+### **Nunzio Messineo** - *s315067*
+
+**Github**: https://github.com/Nunziojh/Computational_Intelligence
 
 ## Lab 1: Set cover problem using A* algorithm
 
 I implemented the A* algorithm, utilizing a heuristic function that estimates the minimum number of steps required to cover all remaining elements, assuming each step covers the maximum possible number of elements. In this approach, the g function corresponds to the length of the set of current states taken. The chosen heuristic function satisfies the admissibility and consistency properties, ensuring the optimality of the solution through an optimistic heuristic estimate.
 
 Upon reviewing the professor's solution, I found it to be superior to mine. Consequently, I opted to adopt the professor's approach in my implementation.
+
+
 
 ## Lab 10: Tic-Tac-Toe with Reinforcement Learning
 
@@ -14,10 +19,15 @@ The agent is trained using the train method and can subsequently play using the 
 
 Despite these adjustments, both implementations yielded unsatisfactory results.
 
+
+
 ### Reviews received
 
 #### Review 1
+
+
 Name: Gabriele Tomatis (S313848)
+
 Github: https://github.com/GabriTom/Computational-Intelligence/
 
 Clarity of the code:
@@ -30,7 +40,10 @@ Overall Evaluation:
 This code is very linear and understandable. Q-learning strategy is well implemented, so good job!
 
 #### Review 2
+
+
 Name: Rita Mendes
+
 Github: https://github.com/class1c-j/polito-ci-labs
 
 Hello, I'm doing a peer review on your lab 10 code, and here's what I found, in the hope that it can help you with the final project as well:
@@ -43,8 +56,12 @@ I hope this was helpful, either way, good job and good luck for the exam!
 
 ### Reviews done
 
+
 #### Review 1
+
+
 Name: Raffaele Viola
+
 Github: https://github.com/RaffaeleViola/computational-intelligence/
 
 I found the code complete and highly modular, indicative of good programming practices. The readme is well-crafted and significantly simplifies the understanding of the code, although it's not strictly necessary since, thanks to the comments, it is quite self-explanatory. The Q-learning-based agent is well implemented with a good selection of parameters. In particular, the use of epsilon, which decreases exponentially with the progression of episodes, was an excellent choice.
@@ -52,7 +69,10 @@ A possible suggestion could be to reorganize the code to make it more linear.
 Overall, I find it to be an excellent implementation of the Tic Tac Toe game algorithm with reinforcement learning, well done!
 
 #### Review 2
+
+
 Name: Gabriele Tomatis
+
 Github: https://github.com/GabriTom/Computational-Intelligence/
 
 The code is well-organized into classes and functions, making the program's structure clear and easily understandable. Furthermore, the comments provide valuable insights into its functioning across all its parts. The Q-learning-based agent is well-implemented with a good selection of parameters. In general, the MinMax algorithm provides a useful evaluation of the system's performance, and the code proves to be effective, winning the majority of the time against the random algorithm.
@@ -61,8 +81,10 @@ Regarding suggestions, perhaps additional comments on the results in the benchma
 
 Overall, I find it to be an excellent implementation of the Tic Tac Toe game algorithm with reinforcement learning, good job!
 
-## Exam Project: Quixo Game
 
+
+
+## Exam Project: Quixo Game
 
 For this project I've decided to implement a player based on the **MinMax algorithm**, enhancing its efficiency with the integration of `alpha-beta pruning`. This optimization technique expedite the search for the best move by pruning branches that are unlikely to impact the final decision.
 
@@ -76,4 +98,4 @@ To increase the performance of the algorithm, I've introduced a cache mechanism 
 
 To address situations where identical states were rotated, I developed a board `rotation mechanism`. This involved implementing methods within the My_MinMax_Player class: *rotate_board*, *rotate_cube*, *transform_slide* and *check_rotations*. These methods ensured that rotated states corresponded to a single cache entry, thereby optimizing memory usage.
 
-The results against a Random player are quite good because My_MinMax_Player obtain a winning rate of approximately 98% if it starts first or not.
+The results against a Random player are quite good because My_MinMax_Player obtain a winning rate of approximately 98% if it starts first or not with a depth equal to 2.
