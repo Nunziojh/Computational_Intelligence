@@ -64,16 +64,16 @@ Overall, I find it to be an excellent implementation of the Tic Tac Toe game alg
 ## Exam Project: Quixo Game
 
 
-For this work I've decided to develop a player based on the **MinMax algorithm**. The `alpha-beta pruning` was implemented to optimize the search for the best move by pruning branches that are not likely to influece the final decision.
+For this project I've decided to implement a player based on the **MinMax algorithm**, enhancing its efficiency with the integration of `alpha-beta pruning`. This optimization technique expedite the search for the best move by pruning branches that are unlikely to impact the final decision.
 
-The **Evaluation function** used to estimate the value of a given state, ir returns 10 for a win, -10 for a loss and if the game is not over return a value based on the longest sequence of the mark player. In particular it returns +/- 1 if the longest sequence divided by the dimension of the board is equal to 1 otherwise this value is diveded by 2 [ 0;0.4 ]. (The positive value is for the max player and the negative for the opponent).
+The **Evaluation function** used to estimate the value of a given state, it returns 10 for a win, -10 for a loss and if the game is ongoing return a value based on the longest sequence of the mark player. In particular it returns +/- 1 if the longest sequence divided by the dimension of the board is equal to 1, otherwise this value is diveded by 2, ranging between 0 and 0.4. The positive value is returned for the max player and the negative for the opponent.
 
-For convenience I modify the Game and Move classes to be more suitable for my code. 
-- In *MyMove class* I simply modify the order of the possible move in a way that consent me to change the move based on the rotation of the board. 
-- In *MyGame class* I modify the method __move that perform the move changing the order of the passed position coordinates to more suitable for my code. I also add two methods: get_possible_cubes and is_acceptable_slide.
+With the aim of make the Game and Move classes more suitable for my code I've implemented a **MyGame** and **MyMove** classes.
+- In *MyMove class* I reorganized the possible move orders to facilitate adjustments based on the board's rotation. 
+- In *MyGame class* I modified the method *__move* that perform the move changing the order of the variable *from_pos* coordinates to better suit my algorithm's needs. I also add two new methods: *get_possible_cubes* and *is_acceptable_slide*.
 
-To increase the performance of the algorithm I've implemented a cache to store the value of the states already evaluated. This `cache` is a dictionary (HashMap) that for each hash(cube, slide, board) corresponde the value. This cache is used to avoid to re-evaluate the same state multiple times (sort of Memoization) and it is reintialized at each move of the opponent. Also to avoid to store repeated states the board saved is an univesal cache that can be used by max and min player. The board is saved with '+' for the moving player and '-' for the opponent. 
+To increase the performance of the algorithm, I've introduced a cache mechanism to store previously evaluated states. This `cache`, implemented as a dictionary (HashMap), mapped each unique entry *hash(cube, slide, board)* to its corresponding value. This cache is used to avoid to re-evaluate the same state multiple times (sort of Memoization) and it is reintialized after each move. Also to avoid to store repeated states the board saved is an universal board that can be used by max and min player. The board is saved with '+' for the moving player and '-' represented the opponent's marks. 
 
-Also to avoid to consider situation that are the same but rotated I've implemented a `rotation` of the board in a way to correspond at each rotation one only entry of the cache. For doing this I've implemented these methods in My_MinMax_Player class: rotate_board, rotate_cube, transform_slide and check_rotations.
+To address situations where identical states were rotated, I developed a board `rotation mechanism`. This involved implementing methods within the My_MinMax_Player class: *rotate_board*, *rotate_cube*, *transform_slide* and *check_rotations*. These methods ensured that rotated states corresponded to a single cache entry, thereby optimizing memory usage.
 
-The results against a Random player are quite good because My_MinMax_Player obtain a winning rate of around 98% both if it starts first or not.
+The results against a Random player are quite good because My_MinMax_Player obtain a winning rate of approximately 98% if it starts first or not.
